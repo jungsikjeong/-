@@ -24,10 +24,10 @@ class ImageInfo {
 
       this.$imageInfo.innerHTML = `
         <div class="content-wrapper">
-          <div class="title">
+          <header class="title">
             <span>${name}</span>
             <div class="close">x</div>
-          </div>
+          </header>
           <img src="${url}" alt="${name}"/>        
           <div class="description">
             <div>성격: ${temperament}</div>
