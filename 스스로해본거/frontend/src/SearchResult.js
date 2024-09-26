@@ -11,7 +11,7 @@ class SearchResult {
     this.data = initialData;
     this.onClick = onClick;
 
-    this.render();
+    this.render(); //초기 렌더링으로 render()호출
   }
 
   setState(nextData) {
