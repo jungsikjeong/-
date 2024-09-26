@@ -1,8 +1,20 @@
 @font-face {
-  font-family: "Goyang";
-  src: url("/src/fonts/Goyang.woff") format("woff");
+  font-family: 'Goyang';
+  src: url('/src/fonts/Goyang.woff') format('woff');
   font-weight: normal;
   font-style: normal;
+}
+
+:root {
+  --background: #ffffff;
+  --text: #000000;
+  --dark-mode-btn: rgb(34, 39, 46);
+  --dark-mode-text: rgb(205, 217, 229);
+}
+
+body.dark-mode {
+  --background: #000000;
+  --text: #ffffff;
 }
 
 html {
@@ -11,6 +23,27 @@ html {
 
 body * {
   font-family: Goyang;
+  background-color: var(--background);
+  color: var(--text);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+button {
+  background: inherit;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  overflow: visible;
+  cursor: pointer;
+}
+
+ul,
+li {
+  margin: 0;
+  padding: 0;
 }
 
 *,
@@ -25,9 +58,27 @@ body * {
   column-gap: 1.5em;
 }
 
+.ToggleBtnWrap {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.ToggleBtn {
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+body.dark-mode .ToggleBtn {
+  background-color: var(--dark-mode-btn);
+  color: var(--dark-mode-text);
+}
+
 .SearchResult {
   margin-top: 10px;
   display: grid;
+  justify-content: center;
   grid-template-columns: repeat(4, minmax(250px, 1fr));
   grid-gap: 10px;
 }
@@ -84,11 +135,33 @@ body * {
   width: 100%;
 }
 
-/* dark mode 처리
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #000;
-    color: white;
+@media (max-width: 992px) {
+  .SearchResult {
+    grid-template-columns: repeat(3, minmax(250px, 1fr));
   }
 }
-*?
+
+@media (max-width: 768px) {
+  .SearchResult {
+    grid-template-columns: repeat(2, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 576px) {
+  .SearchResult {
+    grid-template-columns: repeat(3, minmax(210px, 1fr));
+  }
+}
+
+/* dark mode 처리 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #000000;
+    --text: #ffffff;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--text);
+  }
+}
