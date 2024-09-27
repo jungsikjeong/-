@@ -3,12 +3,24 @@ class ImageInfo {
   data = null;
 
   constructor({ $target, data }) {
-    const $imageInfo = document.createElement("div");
-    $imageInfo.className = "ImageInfo";
+    const $imageInfo = document.createElement('div');
+    $imageInfo.className = 'ImageInfo';
     this.$imageInfo = $imageInfo;
     $target.appendChild($imageInfo);
 
     this.data = data;
+
+    document.addEventListener('keyup', (e) => {
+      if (e.keyCode === 27) {
+        this.$imageInfo.style.display = 'none';
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      if (e.target.className === 'ImageInfo') {
+        this.$imageInfo.style.display = 'none';
+      }
+    });
 
     this.render();
   }
@@ -34,9 +46,15 @@ class ImageInfo {
             <div>태생: ${origin}</div>
           </div>
         </div>`;
-      this.$imageInfo.style.display = "block";
+
+      this.$imageInfo.style.display = 'block';
+
+      const $closeBtn = document.querySelector('.close');
+      $closeBtn.addEventListener('click', () => {
+        this.$imageInfo.style.display = 'none';
+      });
     } else {
-      this.$imageInfo.style.display = "none";
+      this.$imageInfo.style.display = 'none';
     }
   }
 }

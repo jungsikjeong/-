@@ -6,8 +6,13 @@
 }
 
 :root[color-mode='dark'] {
-  ---background: #000;
+  --background: #000;
   --textColor: white;
+}
+
+:root[color-mode='light'] {
+  --background: white;
+  --textColor: #000;
 }
 
 html {
@@ -15,7 +20,7 @@ html {
 }
 
 body {
-  background-color: var(---background);
+  background-color: var(--background);
   color: var(--textColor);
 }
 
@@ -68,6 +73,7 @@ body * {
   top: 0;
   width: 100vw;
   height: 100vh;
+  font-size: 26px;
   background-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -81,6 +87,10 @@ body * {
   padding: 5px;
 }
 
+.ImageInfo .title .close {
+  cursor: pointer;
+}
+
 .ImageInfo .content-wrapper {
   position: absolute;
   left: 50%;
@@ -89,6 +99,7 @@ body * {
   background-color: #fff;
   border: 1px solid #eee;
   border-radius: 5px;
+  color: #000;
 }
 
 .ImageInfo .content-wrapper img {
