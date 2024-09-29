@@ -1,4 +1,4 @@
-console.log('app is running!');
+console.log("app is running!");
 
 class App {
   $target = null; // dom을 가르키는 표시를 $로함
@@ -7,6 +7,10 @@ class App {
   constructor($target) {
     this.$target = $target;
 
+    this.loading = new Loading({
+      $target,
+    });
+
     this.toggleDarkMode = new ToggleDarkMode({
       $target,
     });
@@ -14,7 +18,12 @@ class App {
     this.searchInput = new SearchInput({
       $target,
       onSearch: (keyword) => {
-        api.fetchCats(keyword).then(({ data }) => this.setState(data));
+        this.loading.show();
+        api.fetchCats(keyword).then(({ data }) => {
+          this.setState(data);
+
+          this.loading.hide();
+        });
       },
     });
 
