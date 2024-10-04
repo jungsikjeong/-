@@ -1,11 +1,11 @@
 @font-face {
-  font-family: "Goyang";
-  src: url("/src/fonts/Goyang.woff") format("woff");
+  font-family: 'Goyang';
+  src: url('/src/fonts/Goyang.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
-:root[color-mode="dark"] {
+:root[color-mode='dark'] {
   ---background: #000;
   --textColor: white;
 }
@@ -26,7 +26,7 @@ body * {
 *,
 *:before,
 *:after {
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
 #App {
@@ -57,9 +57,15 @@ body * {
 }
 
 .SearchInput {
-  width: 100%;
+  width: 80%;
   font-size: 40px;
   padding: 10px 15px;
+}
+
+.RandomButton {
+  width: 18%;
+  font-size: 40px;
+  cursor: pointer;
 }
 
 .ImageInfo {
