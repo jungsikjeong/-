@@ -19,7 +19,7 @@ class ToggleDarkMode {
   }
 
   initColorMode(isDarkMode) {
-    this.isDarkMode = window.matchMedia('(prefers-color-scheme:dark)').matches;
+    this.isDarkMode = window.matchMedia('(prefers-color-scheme:dark)').matches; // boolean
     this.$toggleDarkMode.checked = this.isDarkMode;
 
     this.setColorMode(this.isDarkMode);

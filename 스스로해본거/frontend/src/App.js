@@ -1,4 +1,4 @@
-console.log("app is running!");
+console.log('app is running!');
 
 class App {
   $target = null; // dom을 가르키는 표시를 $로함
@@ -13,6 +13,19 @@ class App {
 
     this.toggleDarkMode = new ToggleDarkMode({
       $target,
+    });
+
+    this.randomButton = new RandomButton({
+      $target,
+      onClick: () => {
+        this.loading.show();
+
+        api.fetchCatsRandom().then(({ data }) => {
+          this.setState(data);
+
+          this.loading.hide();
+        });
+      },
     });
 
     this.searchInput = new SearchInput({

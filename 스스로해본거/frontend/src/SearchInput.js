@@ -19,5 +19,4 @@ class SearchInput {
 
     console.log('SearchInput created.', this);
   }
-  render() {}
 }

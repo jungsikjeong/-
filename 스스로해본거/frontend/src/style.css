@@ -1,18 +1,22 @@
 @font-face {
-  font-family: "Goyang";
-  src: url("/src/fonts/Goyang.woff") format("woff");
+  font-family: 'Goyang';
+  src: url('/src/fonts/Goyang.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
-:root[color-mode="dark"] {
+:root[color-mode='dark'] {
   --background: #000;
   --textColor: white;
+  --inputBgColor: #2b2b2b;
+  --placeholder: #cccccc;
 }
 
-:root[color-mode="light"] {
+:root[color-mode='light'] {
   --background: white;
   --textColor: #000;
+  --inputBgColor: white;
+  --placeholder: #a9a9a9;
 }
 
 html {
@@ -65,6 +69,13 @@ body * {
   width: 100%;
   font-size: 40px;
   padding: 10px 15px;
+  background-color: var(--inputBgColor);
+  color: var(--textColor);
+  outline: none;
+}
+
+.SearchInput::placeholder {
+  color: var(--placeholder);
 }
 
 .ImageInfo {
