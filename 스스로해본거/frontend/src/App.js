@@ -15,19 +15,6 @@ class App {
       $target,
     });
 
-    this.randomButton = new RandomButton({
-      $target,
-      onClick: () => {
-        this.loading.show();
-
-        api.fetchCatsRandom().then(({ data }) => {
-          this.setState(data);
-
-          this.loading.hide();
-        });
-      },
-    });
-
     this.searchInput = new SearchInput({
       $target,
       onSearch: (keyword) => {
@@ -38,15 +25,23 @@ class App {
           this.loading.hide();
         });
       },
+      onRandomSearch: () => {
+        this.loading.show();
+        api.fetchCatsRandom().then(({ data }) => {
+          this.setState(data);
+
+          this.loading.hide();
+        });
+      },
     });
 
     this.searchResult = new SearchResult({
       $target,
       initialData: this.data,
-      onClick: (image) => {
+      onClick: (cat) => {
         this.imageInfo.setState({
           visible: true,
-          image,
+          cat,
         });
       },
     });

@@ -10,19 +10,11 @@ class ImageInfo {
 
     this.data = data;
 
-    document.addEventListener('keyup', (e) => {
-      if (e.keyCode === 27) {
-        this.$imageInfo.style.display = 'none';
-      }
-    });
-
-    document.addEventListener('click', (e) => {
-      if (e.target.className === 'ImageInfo') {
-        this.$imageInfo.style.display = 'none';
-      }
-    });
-
     this.render();
+  }
+
+  closeImageInfo() {
+    this.setState({ visible: false, cat: undefined });
   }
 
   setState(nextData) {
@@ -32,7 +24,7 @@ class ImageInfo {
 
   render() {
     if (this.data.visible) {
-      const { name, url, temperament, origin } = this.data.image;
+      const { name, url, temperament, origin } = this.data.cat;
 
       this.$imageInfo.innerHTML = `
         <div class="content-wrapper">
@@ -49,9 +41,19 @@ class ImageInfo {
 
       this.$imageInfo.style.display = 'block';
 
-      const $closeBtn = document.querySelector('.close');
-      $closeBtn.addEventListener('click', () => {
-        this.$imageInfo.style.display = 'none';
+      document.addEventListener('keyup', (e) => {
+        if (e.key === 'Escape') {
+          this.closeImageInfo();
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        if (
+          e.target.className === 'ImageInfo' ||
+          e.target.className === 'close'
+        ) {
+          this.closeImageInfo();
+        }
       });
     } else {
       this.$imageInfo.style.display = 'none';
