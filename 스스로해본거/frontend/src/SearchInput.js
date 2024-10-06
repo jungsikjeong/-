@@ -3,6 +3,7 @@ const TEMPLATE = '<input type="text">';
 class SearchInput {
   constructor({ $target, onSearch, onRandomSearch }) {
     const $wrapper = document.createElement('section');
+    $wrapper.className = 'SearchInputWrapper';
     $target.appendChild($wrapper);
 
     const $searchInput = document.createElement('input');

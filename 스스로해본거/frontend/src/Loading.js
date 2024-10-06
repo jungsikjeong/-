@@ -4,7 +4,7 @@ class Loading {
   };
 
   constructor({ $target }) {
-    const $loading = document.createElement("div");
+    const $loading = document.createElement('div');
     this.$loading = $loading;
 
     $target.appendChild(this.$loading);
@@ -30,12 +30,12 @@ class Loading {
       <div class="Loading">
         <div class='Loading-wrap'>
           <img src='/public/loading.gif' alt='로딩' /> 
-          <p>로딩중..</p>
+          <p>불러오는중..</p>
         </div>
       </div>
       `;
     } else {
-      this.$loading.innerHTML = "";
+      this.$loading.innerHTML = '';
     }
   }
 }

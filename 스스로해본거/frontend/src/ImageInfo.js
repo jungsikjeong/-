@@ -2,11 +2,14 @@ class ImageInfo {
   $imageInfo = null;
   data = null;
 
-  constructor({ $target, data }) {
+  constructor({ $target, loadingShow, loadingHide, data }) {
     const $imageInfo = document.createElement('div');
     $imageInfo.className = 'ImageInfo';
     this.$imageInfo = $imageInfo;
     $target.appendChild($imageInfo);
+
+    this.loadingShow = loadingShow;
+    this.loadingHide = loadingHide;
 
     this.data = data;
 
@@ -15,6 +18,18 @@ class ImageInfo {
 
   closeImageInfo() {
     this.setState({ visible: false, cat: undefined });
+  }
+
+  showDetail(data) {
+    this.loadingShow();
+
+    api.fetchCatDetail(data.cat.id).then(({ data }) => {
+      this.setState({
+        visible: true,
+        cat: data,
+      }),
+        this.loadingHide();
+    });
   }
 
   setState(nextData) {

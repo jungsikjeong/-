@@ -15,6 +15,6 @@ const api = {
   },
 
   fetchCatDetail: (id) => {
-    return fetch(`${API_ENDPOINT}/api/cat/${id}`).then((res) => res.json());
+    return fetch(`${API_ENDPOINT}/api/cats/${id}`).then((res) => res.json());
   },
 };

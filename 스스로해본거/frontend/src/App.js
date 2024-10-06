@@ -38,8 +38,9 @@ class App {
     this.searchResult = new SearchResult({
       $target,
       initialData: this.data,
+
       onClick: (cat) => {
-        this.imageInfo.setState({
+        this.imageInfo.showDetail({
           visible: true,
           cat,
         });
@@ -48,6 +49,8 @@ class App {
 
     this.imageInfo = new ImageInfo({
       $target,
+      loadingShow: () => this.loading.show(),
+      loadingHide: () => this.loading.hide(),
       data: {
         visible: false,
         image: null,
