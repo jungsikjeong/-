@@ -24,6 +24,8 @@ class App {
           this.setState(data);
           // 로딩 hide
           this.loading.hide();
+          // 로컬에 저장
+          this.saveResult(data);
         });
       },
       onRandomSearch: () => {
@@ -53,6 +55,8 @@ class App {
         image: null,
       },
     });
+
+    this.init();
   }
 
   setState(nextData) {
@@ -60,4 +64,19 @@ class App {
     this.data = nextData;
     this.searchResult.setState(nextData);
   }
+
+  saveResult(result) {
+    localStorage.setItem('lastResult', JSON.stringify(result));
+  }
+
+  init() {
+    const lastResult =
+      localStorage.getItem('lastResult') === null
+        ? []
+        : JSON.parse(localStorage.getItem('lastResult'));
+
+    this.setState(lastResult);
+  }
 }
+
+// TODO:마지막 키워드 input에 입력되게끔
