@@ -17,6 +17,7 @@ class SearchInput {
     $searchInput.addEventListener('keyup', (e) => {
       if (e.keyCode === 13) {
         onSearch(e.target.value);
+        this.$keywordHistory.setHistory(e.target.value);
       }
     });
 
@@ -30,6 +31,7 @@ class SearchInput {
     $randomButton.addEventListener('click', (e) => {
       onRandomSearch();
     });
-    // console.log('SearchInput created.', this);
+
+    this.$keywordHistory = new KeywordHistory({ $target, onSearch });
   }
 }
