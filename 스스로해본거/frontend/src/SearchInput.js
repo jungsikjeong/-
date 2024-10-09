@@ -9,10 +9,15 @@ class SearchInput {
     const $searchInput = document.createElement('input');
     this.$searchInput = $searchInput;
     this.$searchInput.placeholder = '고양이를 검색해보세요.|';
+    this.$searchInput.value =
+      localStorage.getItem('keywordHistory') === null
+        ? []
+        : localStorage.getItem('keywordHistory')[0];
 
     $searchInput.className = 'SearchInput';
 
     $wrapper.appendChild($searchInput);
+    document.querySelector('.SearchInput').focus();
 
     $searchInput.addEventListener('keyup', (e) => {
       if (e.keyCode === 13) {

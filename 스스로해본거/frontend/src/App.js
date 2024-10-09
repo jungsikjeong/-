@@ -21,7 +21,7 @@ class App {
         this.loading.show();
         api.fetchCats(keyword).then(({ data }) => {
           this.setState(data);
-
+          localStorage.setItem('lastResult', JSON.stringify(data));
           this.loading.hide();
         });
       },
@@ -56,10 +56,18 @@ class App {
         image: null,
       },
     });
+
+    this.init();
   }
 
   setState(nextData) {
     this.data = nextData;
     this.searchResult.setState(nextData);
+  }
+
+  init() {
+    const data = JSON.parse(localStorage.getItem('lastResult'));
+
+    this.setState(data);
   }
 }
