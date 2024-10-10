@@ -12,7 +12,7 @@ class SearchInput {
     this.$searchInput.value =
       localStorage.getItem('keywordHistory') === null
         ? []
-        : localStorage.getItem('keywordHistory')[0];
+        : localStorage.getItem('keywordHistory').split(',')[0];
 
     $searchInput.className = 'SearchInput';
 
@@ -37,6 +37,12 @@ class SearchInput {
       onRandomSearch();
     });
 
-    this.$keywordHistory = new KeywordHistory({ $target, onSearch });
+    this.$keywordHistory = new KeywordHistory({
+      $target,
+      onSearch,
+      setSearchInputValue: (keyword) => {
+        this.$searchInput.value = keyword;
+      },
+    });
   }
 }

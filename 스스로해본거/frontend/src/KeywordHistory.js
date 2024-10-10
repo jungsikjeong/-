@@ -1,13 +1,14 @@
 class KeywordHistory {
   data = null;
 
-  constructor({ $target, onSearch }) {
+  constructor({ $target, onSearch, setSearchInputValue }) {
     const $keywordHistory = document.createElement('ul');
-    $keywordHistory.classListName = 'KeywordHistory';
+    $keywordHistory.className = 'KeywordHistory';
     $target.appendChild($keywordHistory);
 
     this.$keywordHistory = $keywordHistory;
     this.onSearch = onSearch;
+    this.setSearchInputValue = setSearchInputValue;
 
     this.init();
     this.render();
@@ -56,6 +57,7 @@ class KeywordHistory {
       .forEach(($item, index) => {
         $item.addEventListener('click', () => {
           this.onSearch(this.data[index]);
+          this.setSearchInputValue(this.data[index]);
         });
       });
   }

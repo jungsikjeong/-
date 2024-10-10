@@ -22,6 +22,7 @@ class App {
         api.fetchCats(keyword).then(({ data }) => {
           this.setState(data);
           localStorage.setItem('lastResult', JSON.stringify(data));
+          this.searchInput.value = JSON.stringify(data);
           this.loading.hide();
         });
       },
