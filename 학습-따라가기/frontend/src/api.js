@@ -13,7 +13,7 @@ const request = async (url) => {
     if (result.status === 200) {
       return result.json();
     } else {
-      throw REQUEST_ERROR[request.status];
+      throw REQUEST_ERROR[result.status];
     }
   } catch (error) {
     alert(error.msg);
