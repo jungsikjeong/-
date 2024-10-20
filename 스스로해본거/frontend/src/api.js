@@ -31,6 +31,11 @@ const api = {
     return request(`${API_ENDPOINT}/api/cats/random50`);
   },
 
+  fetchCatsPage: (keyword, page) => {
+    return request(`${API_ENDPOINT}/api/cats/search?q=${keyword}&
+      page=${page}`);
+  },
+
   fetchCatDetail: (id) => {
     return request(`${API_ENDPOINT}/api/cats/${id}`);
   },
