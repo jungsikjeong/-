@@ -1,25 +1,41 @@
 const API_ENDPOINT = 'http://localhost:4001';
 
-// const API_ENDPOINT =
-//   'https://rhdd0roxs5.execute-api.ap-northeast-2.amazonaws.com/dev';
+const REQUEST_ERROR = {
+  500: {
+    msg: '요청 실패',
+  },
+};
+
+const request = async (url) => {
+  try {
+    const result = await fetch(url);
+    // console.dir(result.status);
+    if (result.status === 200) {
+      return result.json();
+    } else {
+      throw REQUEST_ERROR[request.status];
+    }
+  } catch (error) {
+    alert(error.msg);
+    return { data: null };
+  }
+};
 
 const api = {
   fetchCats: (keyword) => {
-    return fetch(`${API_ENDPOINT}/api/cats/search?q=${keyword}`).then((res) =>
-      res.json()
-    );
+    return request(`${API_ENDPOINT}/api/cats/search?q=${keyword}`);
   },
 
   fetchCatsPage: (keyword, page) => {
-    return fetch(`${API_ENDPOINT}/api/cats/search?q=${keyword}&
-      page=${page}`).then((res) => res.json());
+    return request(`${API_ENDPOINT}/api/cats/search?q=${keyword}&
+      page=${page}`);
   },
 
   fetchRandomCats: () => {
-    return fetch(`${API_ENDPOINT}/api/cats/random50`).then((res) => res.json());
+    return request(`${API_ENDPOINT}/api/cats/random50`);
   },
 
   fetchCatDetail: (id) => {
-    return fetch(`${API_ENDPOINT}/api/cats/${id}`).then((res) => res.json());
+    return request(`${API_ENDPOINT}/api/cats/${id}`);
   },
 };
