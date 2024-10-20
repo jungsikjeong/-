@@ -19,8 +19,8 @@ class SearchInput {
     $wrapper.appendChild($searchInput);
     document.querySelector('.SearchInput').focus();
 
-    $searchInput.addEventListener('keyup', (e) => {
-      if (e.keyCode === 13) {
+    $searchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
         onSearch(e.target.value);
         this.$keywordHistory.setHistory(e.target.value);
       }

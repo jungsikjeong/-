@@ -20,10 +20,12 @@ class App {
       onSearch: (keyword) => {
         this.loading.show();
         api.fetchCats(keyword).then(({ data }) => {
-          this.setState(data);
-          localStorage.setItem('lastResult', JSON.stringify(data));
+          this.setState(data ? data : []);
+
           this.searchInput.value = JSON.stringify(data);
           this.loading.hide();
+
+          this.saveResult(data);
         });
       },
       onRandomSearch: () => {
@@ -66,9 +68,16 @@ class App {
     this.searchResult.setState(nextData);
   }
 
-  init() {
-    const data = JSON.parse(localStorage.getItem('lastResult'));
+  saveResult(result) {
+    localStorage.setItem('lastResult', JSON.stringify(result));
+  }
 
-    this.setState(data);
+  init() {
+    const lastResult =
+      localStorage.getItem('lastResult') === null
+        ? []
+        : JSON.parse(localStorage.getItem('lastResult'));
+
+    this.setState(lastResult);
   }
 }
