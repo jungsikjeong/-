@@ -1,10 +1,6 @@
-const API_ENDPOINT = 'http://localhost:4001';
+import config from './config.js';
 
-const REQUEST_ERROR = {
-  500: {
-    msg: '결과를 전송받지 못했습니다.',
-  },
-};
+const { API_ENDPOINT, REQUEST_ERROR } = config;
 
 const request = async (url) => {
   try {
@@ -40,3 +36,5 @@ const api = {
     return request(`${API_ENDPOINT}/api/cats/${id}`);
   },
 };
+
+export default api;

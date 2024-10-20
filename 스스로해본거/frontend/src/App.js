@@ -1,3 +1,10 @@
+import api from './api.js';
+import ImageInfo from './ImageInfo.js';
+import Loading from './Loading.js';
+import SearchInput from './SearchInput.js';
+import SearchResult from './SearchResult.js';
+import ToggleDarkMode from './ToggleDarkMode.js';
+
 console.log('app is running!');
 
 class App {
@@ -62,8 +69,11 @@ class App {
         const page = this.page + 1;
 
         api.fetchCatsPage(lastKeyword, page).then(({ data }) => {
-          // TODO: 데이터 요청 실패하거나 데이터 없을시 로딩창 사라지게하고, data is not어쩌구 안뜨게하기
-          let newData = [...this.data, ...data];
+          if (!data) {
+            this.loading.hide();
+            return;
+          }
+          let newData = this.data.concat(data);
           this.setState(newData);
           this.page = page;
           this.loading.hide();
@@ -102,3 +112,5 @@ class App {
     this.setState(lastResult);
   }
 }
+
+export default App;
