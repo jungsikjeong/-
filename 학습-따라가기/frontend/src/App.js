@@ -1,8 +1,16 @@
+import DarkModeToggle from './DarkModeToggle.js';
+import SearchInput from './SearchInput.js';
+import SearchResult from './SearchResult.js';
+import ImageInfo from './ImageInfo.js';
+import Loading from './Loading.js';
+import api from './api.js';
+
 console.log('app is running!');
 
 class App {
   $target = null; // dom을 가르키는 표시를 $로함
   data = [];
+  page = 1;
 
   constructor($target) {
     this.$target = $target;
@@ -21,9 +29,11 @@ class App {
         // 로딩 show
         this.loading.show();
         api.fetchCats(keyword).then(({ data }) => {
-          this.setState(data);
+          this.setState(data ? data : []);
           // 로딩 hide
           this.loading.hide();
+          // 로컬에 저장
+          this.saveResult(data);
         });
       },
       onRandomSearch: () => {
@@ -44,6 +54,25 @@ class App {
           cat,
         });
       },
+
+      onNextPage: () => {
+        console.log('다음 페이지 로딩');
+        this.loading.show();
+
+        const keywordHistory =
+          localStorage.getItem('keywordHistory') === null
+            ? []
+            : localStorage.getItem('keywordHistory').split(',');
+        const lastKeyword = keywordHistory[0];
+        const page = this.page + 1;
+
+        api.fetchCatsPage(lastKeyword, page).then(({ data }) => {
+          let newData = this.data.concat(data);
+          this.setState(newData);
+          this.page = page;
+          this.loading.hide();
+        });
+      },
     });
 
     this.imageInfo = new ImageInfo({
@@ -53,6 +82,8 @@ class App {
         image: null,
       },
     });
+
+    this.init();
   }
 
   setState(nextData) {
@@ -60,4 +91,19 @@ class App {
     this.data = nextData;
     this.searchResult.setState(nextData);
   }
+
+  saveResult(result) {
+    localStorage.setItem('lastResult', JSON.stringify(result));
+  }
+
+  init() {
+    const lastResult =
+      localStorage.getItem('lastResult') === null
+        ? []
+        : JSON.parse(localStorage.getItem('lastResult'));
+
+    this.setState(lastResult);
+  }
 }
+
+export default App;

@@ -1,3 +1,5 @@
+import api from './api.js';
+
 class ImageInfo {
   $imageInfo = null;
   data = null;
@@ -24,11 +26,15 @@ class ImageInfo {
     this.loadingShow();
 
     api.fetchCatDetail(data.cat.id).then(({ data }) => {
-      this.setState({
-        visible: true,
-        cat: data,
-      }),
+      if (data) {
+        this.setState({
+          visible: true,
+          cat: data,
+        }),
+          this.loadingHide();
+      } else {
         this.loadingHide();
+      }
     });
   }
 
@@ -38,7 +44,7 @@ class ImageInfo {
   }
 
   render() {
-    if (this.data.visible) {
+    if (this.data.visible && this.data.cat) {
       const { name, url, temperament, origin } = this.data.cat;
 
       this.$imageInfo.innerHTML = `
@@ -75,3 +81,5 @@ class ImageInfo {
     }
   }
 }
+
+export default ImageInfo;

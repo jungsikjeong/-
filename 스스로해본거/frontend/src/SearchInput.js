@@ -1,3 +1,5 @@
+import KeywordHistory from './KeywordHistory.js';
+
 const TEMPLATE = '<input type="text">';
 
 class SearchInput {
@@ -9,14 +11,20 @@ class SearchInput {
     const $searchInput = document.createElement('input');
     this.$searchInput = $searchInput;
     this.$searchInput.placeholder = '고양이를 검색해보세요.|';
+    this.$searchInput.value =
+      localStorage.getItem('keywordHistory') === null
+        ? []
+        : localStorage.getItem('keywordHistory').split(',')[0];
 
     $searchInput.className = 'SearchInput';
 
     $wrapper.appendChild($searchInput);
+    document.querySelector('.SearchInput').focus();
 
-    $searchInput.addEventListener('keyup', (e) => {
-      if (e.keyCode === 13) {
+    $searchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
         onSearch(e.target.value);
+        this.$keywordHistory.setHistory(e.target.value);
       }
     });
 
@@ -30,6 +38,15 @@ class SearchInput {
     $randomButton.addEventListener('click', (e) => {
       onRandomSearch();
     });
-    // console.log('SearchInput created.', this);
+
+    this.$keywordHistory = new KeywordHistory({
+      $target,
+      onSearch,
+      setSearchInputValue: (keyword) => {
+        this.$searchInput.value = keyword;
+      },
+    });
   }
 }
+
+export default SearchInput;

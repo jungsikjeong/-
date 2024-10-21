@@ -3,7 +3,7 @@ class Loading {
   data = null;
 
   constructor({ $target }) {
-    const $loading = document.createElement("div");
+    const $loading = document.createElement('div');
     this.$loading = $loading;
     $target.appendChild(this.$loading);
 
@@ -39,7 +39,9 @@ class Loading {
       </div>
       `;
     } else {
-      this.$loading.innerHTML = "";
+      this.$loading.innerHTML = '';
     }
   }
 }
+
+export default Loading;

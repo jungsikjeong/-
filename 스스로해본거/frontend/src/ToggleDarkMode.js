@@ -32,3 +32,5 @@ class ToggleDarkMode {
     );
   }
 }
+
+export default ToggleDarkMode;

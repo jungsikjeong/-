@@ -1,3 +1,5 @@
+import KeywordHistory from './KeywordHistory.js';
+
 const TEMPLATE = '<input type="text">';
 
 class SearchInput {
@@ -12,9 +14,12 @@ class SearchInput {
     $searchInput.className = 'SearchInput';
     $wrapper.appendChild($searchInput);
 
-    $searchInput.addEventListener('keyup', (e) => {
-      if (e.keyCode === 13) {
+    //keyup은 한글일때 두번 요청해서 문제가발생할 수 있음
+    $searchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
         onSearch(e.target.value);
+
+        this.keywordHistory.addKeyword(e.target.value);
       }
     });
 
@@ -29,7 +34,9 @@ class SearchInput {
       onRandomSearch();
     });
 
-    this.keywordHistory = new KeywordHistory({ $target });
+    this.keywordHistory = new KeywordHistory({ $target, onSearch });
   }
   render() {}
 }
+
+export default SearchInput;
