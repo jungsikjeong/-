@@ -1,3 +1,5 @@
+import uniqueArray from './utils/uniqueArray.js';
+
 class KeywordHistory {
   data = null;
 
@@ -15,12 +17,16 @@ class KeywordHistory {
   }
 
   setHistory(keyword) {
-    let data = this.getHistory();
-    data.unshift(keyword);
-    data = data.slice(0, 5);
-    localStorage.setItem('keywordHistory', data.join(','));
+    // 최근 키워드 저장
+    let keywordHistory = this.getHistory();
+    keywordHistory.unshift(keyword);
 
-    this.setState(data);
+    // 중복 제거
+    keywordHistory = keywordHistory.slice(0, 5);
+    keywordHistory = uniqueArray(keywordHistory);
+    localStorage.setItem('keywordHistory', keywordHistory.join(','));
+
+    this.init();
   }
 
   getHistory() {
