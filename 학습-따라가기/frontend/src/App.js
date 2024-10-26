@@ -33,7 +33,9 @@ class App {
         this.loading.show();
         api.fetchCats(keyword).then(({ data }) => {
           this.setState({
-            items: data ? data : [],
+            // data ? data : [] => data 로 변경
+            // 그러면 data는 null이들어갈수있고, data 값이 들어갈 수도있음 ( api에서 data가없으면 null을리턴)
+            items: data,
             page: this.DEFAULT_PAGE,
           });
           // 로딩 hide
@@ -46,7 +48,9 @@ class App {
         this.loading.show();
         api.fetchRandomCats().then(({ data }) => {
           this.setState({
-            items: data ? data : [],
+            // data ? data : [] => data 로 변경
+            // 그러면 data는 null이들어갈수있고, data 값이 들어갈 수도있음 ( api에서 data가없으면 null을리턴)
+            items: data,
             page: this.DEFAULT_PAGE,
           });
           this.loading.hide();
