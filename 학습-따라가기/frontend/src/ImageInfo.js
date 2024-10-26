@@ -20,14 +20,22 @@ class ImageInfo {
     this.render();
   }
 
-  showDetail(data) {
-    // 상세 정보 요청
-    api.fetchCatDetail(data.cat.id).then(({ data }) =>
+  async showDetail(data) {
+    const detailInfo = await api.fetchCatDetail(data.cat.id);
+    if (detailInfo) {
       this.setState({
         visible: true,
-        cat: data,
-      })
-    );
+        cat: detailInfo.data,
+      });
+    }
+
+    // 상세 정보 요청
+    // api.fetchCatDetail(data.cat.id).then(({ data }) =>
+    //   this.setState({
+    //     visible: true,
+    //     cat: data,
+    //   })
+    // );
   }
 
   closeImageInfo() {

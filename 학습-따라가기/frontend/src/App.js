@@ -9,8 +9,11 @@ console.log('app is running!');
 
 class App {
   $target = null; // dom을 가르키는 표시를 $로함
-  data = [];
-  page = 1;
+  DEFAULT_PAGE = 1;
+  data = {
+    items: [],
+    page: this.DEFAULT_PAGE,
+  };
 
   constructor($target) {
     this.$target = $target;
@@ -29,7 +32,10 @@ class App {
         // 로딩 show
         this.loading.show();
         api.fetchCats(keyword).then(({ data }) => {
-          this.setState(data ? data : []);
+          this.setState({
+            items: data ? data : [],
+            page: this.DEFAULT_PAGE,
+          });
           // 로딩 hide
           this.loading.hide();
           // 로컬에 저장
@@ -39,7 +45,10 @@ class App {
       onRandomSearch: () => {
         this.loading.show();
         api.fetchRandomCats().then(({ data }) => {
-          this.setState(data);
+          this.setState({
+            items: data ? data : [],
+            page: this.DEFAULT_PAGE,
+          });
           this.loading.hide();
         });
       },
@@ -47,7 +56,7 @@ class App {
 
     this.searchResult = new SearchResult({
       $target,
-      initialData: this.data,
+      initialData: this.data.items,
       onClick: (cat) => {
         this.imageInfo.showDetail({
           visible: true,
@@ -56,7 +65,6 @@ class App {
       },
 
       onNextPage: () => {
-        console.log('다음 페이지 로딩');
         this.loading.show();
 
         const keywordHistory =
@@ -67,9 +75,13 @@ class App {
         const page = this.page + 1;
 
         api.fetchCatsPage(lastKeyword, page).then(({ data }) => {
-          let newData = this.data.concat(data);
-          this.setState(newData);
-          this.page = page;
+          let newData = this.data.items.concat(data);
+
+          this.setState({
+            items: newData,
+            page,
+          });
+
           this.loading.hide();
         });
       },
@@ -87,9 +99,8 @@ class App {
   }
 
   setState(nextData) {
-    console.log(this);
     this.data = nextData;
-    this.searchResult.setState(nextData);
+    this.searchResult.setState(nextData.items);
   }
 
   saveResult(result) {
@@ -102,7 +113,10 @@ class App {
         ? []
         : JSON.parse(localStorage.getItem('lastResult'));
 
-    this.setState(lastResult);
+    this.setState({
+      items: lastResult,
+      page: this.DEFAULT_PAGE,
+    });
   }
 }
 
