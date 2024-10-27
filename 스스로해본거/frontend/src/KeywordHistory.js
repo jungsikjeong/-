@@ -47,6 +47,17 @@ class KeywordHistory {
     this.render();
   }
 
+  bindEvent() {
+    this.$keywordHistory
+      .querySelectorAll('li button')
+      .forEach(($item, index) => {
+        $item.addEventListener('click', () => {
+          this.onSearch(this.data[index]);
+          this.setSearchInputValue(this.data[index]);
+        });
+      });
+  }
+
   render() {
     this.$keywordHistory.innerHTML = this.data
       ?.map(
@@ -58,14 +69,7 @@ class KeywordHistory {
       )
       .join('');
 
-    this.$keywordHistory
-      .querySelectorAll('li button')
-      .forEach(($item, index) => {
-        $item.addEventListener('click', () => {
-          this.onSearch(this.data[index]);
-          this.setSearchInputValue(this.data[index]);
-        });
-      });
+    this.bindEvent();
   }
 }
 

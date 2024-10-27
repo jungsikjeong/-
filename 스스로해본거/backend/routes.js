@@ -1,13 +1,13 @@
-const express = require("express");
-const { delay } = require("lodash");
-const fs = require("fs");
+const express = require('express');
+const { delay } = require('lodash');
+const fs = require('fs');
 const router = express.Router();
-const { getRandomNumber } = require("./utils");
+const { getRandomNumber } = require('./utils');
 
 const pagingUnit = 32;
-const data = require("./data.json");
+const data = require('./data.json');
 
-const allDataCount = JSON.parse(fs.readFileSync("data.json").toString()).length;
+const allDataCount = JSON.parse(fs.readFileSync('data.json').toString()).length;
 
 const ERROR_ENCOUNT_PERCENT = 10;
 const MAX_DELAY_TIME = 3000;
@@ -51,10 +51,10 @@ router.get("/cats/all", (req, res) => {
 const convertToForList = ({ id, url, name }) => ({
   id,
   url,
-  name
+  name,
 });
 
-router.get("/cats/random50", (req, res) => {
+router.get('/cats/random50', (req, res) => {
   const minIndex = 0;
   const maxIndex = allDataCount - 1;
   const randomFiftyIndice = Array.from(Array(50).keys()).map(() =>
@@ -64,18 +64,18 @@ router.get("/cats/random50", (req, res) => {
   delay(() => {
     if (getError()) {
       return res.status(500).send({
-        message: "This is an intentional error."
+        message: 'This is an intentional error.',
       });
     }
     return res.status(200).send({
       data: data
         .filter((_, index) => randomFiftyIndice.includes(index))
-        .map(convertToForList)
+        .map(convertToForList),
     });
   }, getRandomNumber(0, MAX_DELAY_TIME));
 });
 
-router.get("/cats/search", (req, res) => {
+router.get('/cats/search', (req, res) => {
   const { q } = req.query;
   const page = req.query.page ? Number(req.query.page) : 1;
   const limit = req.query.limit ? Number(req.query.limit) : 50;
@@ -83,7 +83,7 @@ router.get("/cats/search", (req, res) => {
   if (!q) {
     return res.status(400).send({
       message:
-        "Query parameter(q) should be given in order to search gif images."
+        'Query parameter(q) should be given in order to search gif images.',
     });
   }
   const startIndex = (page - 1) * pagingUnit;
@@ -92,7 +92,7 @@ router.get("/cats/search", (req, res) => {
   delay(() => {
     if (getError()) {
       return res.status(500).send({
-        message: "This is an intentional error."
+        message: 'This is an intentional error.',
       });
     }
     return res.status(200).send({
@@ -105,35 +105,35 @@ router.get("/cats/search", (req, res) => {
         )
         .slice(startIndex, endIndex)
         .map(convertToForList)
-        .slice(0, limit)
+        .slice(0, limit),
     });
   }, getRandomNumber(0, MAX_DELAY_TIME));
 });
 
-router.get("/cats/:id", (req, res) => {
+router.get('/cats/:id', (req, res) => {
   const { id } = req.params;
 
   if (!id) {
     return res.status(400).send({
-      message: "Parameter(id) should be given."
+      message: 'Parameter(id) should be given.',
     });
   }
   delay(() => {
     if (getError()) {
       return res.status(500).send({
-        message: "This is an intentional error."
+        message: 'This is an intentional error.',
       });
     }
-    const foundCat = data.find(cat => cat.id === id);
+    const foundCat = data.find((cat) => cat.id === id);
 
     if (!foundCat) {
       return res.status(400).send({
-        message: "The gif image with the given id could not be found."
+        message: 'The gif image with the given id could not be found.',
       });
     }
 
     return res.status(200).send({
-      data: foundCat
+      data: foundCat,
     });
   }, getRandomNumber(0, MAX_DELAY_TIME));
 });

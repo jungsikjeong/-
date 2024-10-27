@@ -15,12 +15,17 @@ class Loading {
   }
 
   show() {
-    this.data.show = true;
+    this.setState(true);
     this.render();
   }
 
   hide() {
-    this.data.show = false;
+    this.setState(false);
+    this.render();
+  }
+
+  setState(nextData) {
+    this.data.show = nextData;
     this.render();
   }
 

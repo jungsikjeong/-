@@ -22,20 +22,19 @@ class ImageInfo {
     this.setState({ visible: false, cat: undefined });
   }
 
-  showDetail(data) {
+  async showDetail(data) {
     this.loadingShow();
 
-    api.fetchCatDetail(data.cat.id).then(({ data }) => {
-      if (data) {
-        this.setState({
-          visible: true,
-          cat: data,
-        }),
-          this.loadingHide();
-      } else {
+    const detailInfo = await api.fetchCatDetail(data.cat.id);
+    if (detailInfo) {
+      this.setState({
+        visible: true,
+        cat: detailInfo.data,
+      }),
         this.loadingHide();
-      }
-    });
+    } else {
+      this.loadingHide();
+    }
   }
 
   setState(nextData) {

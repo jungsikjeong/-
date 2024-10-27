@@ -13,7 +13,6 @@ const request = async (url) => {
     }
   } catch (error) {
     console.log(error);
-    alert(error.msg);
     return { data: null };
   }
 };

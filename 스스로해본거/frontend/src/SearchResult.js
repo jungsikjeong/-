@@ -1,3 +1,5 @@
+import Empty from './Empty.js';
+
 class SearchResult {
   $searchResult = null;
   data = null;
@@ -14,12 +16,15 @@ class SearchResult {
     this.data = initialData;
     this.onClick = onClick;
 
+    this.empty = new Empty({ $target: $wrapper });
+
     this.render();
   }
 
   setState(nextData) {
     this.data = nextData;
     this.render();
+    this.empty.show(nextData);
   }
 
   listObserver = new IntersectionObserver((items, observer) => {
@@ -39,9 +44,10 @@ class SearchResult {
   });
 
   render() {
-    if (this.data?.length === 0) {
-      this.$searchResult.innerHTML = '검색 결과가 텅 비었습니다.';
+    if (this.data === null || this.data?.length === 0) {
+      this.$searchResult.style.display = 'none';
     } else {
+      this.$searchResult.style.display = 'grid';
       this.$searchResult.innerHTML = this.data
         .map(
           (cat, index) => `
